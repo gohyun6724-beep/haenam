@@ -22,7 +22,6 @@ const Home = () => {
         <>
             <Header />
             <div style={{ paddingTop: '100px' }}> {/* Wrapper to push content below fixed header */}
-                <HallOfFame />
             </div>
 
             <main className="bg-math-grid" style={{ fontFamily: '"Pretendard", sans-serif' }}>
@@ -30,13 +29,23 @@ const Home = () => {
 
                 {/* 0. Urgent Notice Removed as per request */}
 
-                {/* 1. Hero: Centerede & Impactful */}
+                {/* 1. Hero: Centerede & Impactful - Full Screen */}
                 <motion.section
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true }}
                     variants={fadeInUp}
-                    style={{ backgroundColor: 'transparent', padding: '120px 0', borderBottom: '1px solid var(--border-color)', textAlign: 'center' }}
+                    style={{
+                        backgroundColor: 'transparent',
+                        minHeight: '100vh', /* Full viewport height */
+                        paddingTop: '100px', /* Account for header */
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        borderBottom: '1px solid var(--border-color)',
+                        textAlign: 'center',
+                        position: 'relative'
+                    }}
                 >
                     <div className="container">
                         <motion.div style={{ maxWidth: '800px', margin: '0 auto' }}>
@@ -71,6 +80,11 @@ const Home = () => {
                         </motion.div>
                     </div>
                 </motion.section>
+
+                {/* Overlapping Hall of Fame - Glass Bar */}
+                <div style={{ position: 'relative', marginTop: '-52px', zIndex: 20 }}>
+                    <HallOfFame />
+                </div>
 
                 {/* [NEW] Director's Philosophy */}
                 <DirectorIntro />

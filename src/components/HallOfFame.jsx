@@ -20,13 +20,18 @@ const HallOfFame = () => {
 
     return (
         <div style={{
-            backgroundColor: 'var(--primary-dark)',
+            background: 'linear-gradient(90deg, rgba(30, 58, 138, 0.8), rgba(30, 64, 175, 0.8))', // Glassy Blue-Dark
+            backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)',
             color: 'white',
-            padding: '12px 0',
+            padding: '10px 0', /* Reduced padding */
             overflow: 'hidden',
             display: 'flex',
             alignItems: 'center',
-            borderBottom: '1px solid rgba(255,255,255,0.1)'
+            borderTop: '1px solid rgba(255,255,255,0.2)',
+            borderBottom: '1px solid rgba(255,255,255,0.1)',
+            width: '100%', /* Full width */
+            boxShadow: '0 -4px 20px rgba(0,0,0,0.1)', /* Subtle lift */
         }}>
             <div style={{
                 backgroundColor: 'var(--accent-red)',
