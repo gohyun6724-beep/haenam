@@ -32,7 +32,7 @@ const SuccessReviews = () => {
                     <p className="section-subtitle">24점의 기적부터 전 과목 만점 신화까지, 해냄수학의 증명된 결과입니다.</p>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '30px' }}>
+                <div className="reviews-grid">
                     {reviews.map((review, idx) => (
                         <motion.div
                             key={idx}

@@ -1,66 +1,166 @@
-import React from 'react';
-import { Phone } from 'lucide-react';
+import React, { useState } from 'react';
+import { Menu, X, Phone } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const Header = () => {
-    return (
-        <header style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            height: '100px',
-            backgroundColor: '#FFFFFF',
-            borderBottom: '1px solid var(--border-color)',
-            zIndex: 1000,
-            display: 'flex',
-            alignItems: 'center'
-        }}>
-            <div className="container" style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                width: '100%'
-            }}>
-                <a href="#" className="logo" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
-                    <div style={{
-                        width: '40px',
-                        height: '40px',
-                        background: 'linear-gradient(135deg, var(--primary-blue), var(--primary-dark))',
-                        borderRadius: '10px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        color: 'white',
-                        fontWeight: '900',
-                        fontSize: '24px',
-                        boxShadow: 'var(--shadow-sm)'
-                    }}>H</div>
-                    <span style={{ fontSize: '26px', fontWeight: '900', color: 'var(--text-main)', letterSpacing: '-0.02em', fontFamily: '"Pretendard", sans-serif' }}>
-                        해냄<span style={{ color: 'var(--primary-blue)' }}>수학</span>
-                    </span>
-                </a>
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-                <nav style={{ display: 'flex', alignItems: 'center', gap: '40px' }}>
-                    <a href="#management" className="nav-link">관리 시스템</a>
-                    <a href="#success" className="nav-link">성적 향상 후기</a>
-                    <a href="#curriculum" className="nav-link">커리큘럼</a>
-                    <a href="#contact" className="nav-link">입학 안내</a>
-                    <button className="blue-gradient btn-interaction" style={{
-                        padding: '12px 24px',
-                        borderRadius: '50px',
-                        color: 'white',
-                        fontWeight: '600',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '8px',
-                        boxShadow: 'var(--shadow-md)'
-                    }}>
-                        <Phone size={18} />
-                        <span>상담 신청</span>
+    const navLinks = [
+        { name: '학원 소개', href: '#intro' },
+        { name: '관리 시스템', href: '#management' },
+        { name: '성적 향상 후기', href: '#success' },
+        { name: '커리큘럼', href: '#curriculum' },
+        { name: '입학 안내', href: '#contact' },
+    ];
+
+    return (
+        <>
+            <header style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                right: 0,
+                height: '80px',
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                backdropFilter: 'blur(12px)',
+                borderBottom: '1px solid rgba(0,0,0,0.05)',
+                zIndex: 1000,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+            }}>
+                <div className="container" style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    width: '100%',
+                    padding: '0 20px'
+                }}>
+                    <a href="#" className="logo" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
+                        <div style={{
+                            width: '40px',
+                            height: '40px',
+                            background: 'linear-gradient(135deg, var(--primary-blue), var(--primary-dark))',
+                            borderRadius: '10px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            color: 'white',
+                            fontWeight: '900',
+                            fontSize: '24px',
+                            boxShadow: 'var(--shadow-sm)'
+                        }}>H</div>
+                        <span style={{ fontSize: '26px', fontWeight: '900', color: 'var(--text-main)', letterSpacing: '-0.02em', fontFamily: '"Pretendard", sans-serif' }}>
+                            해냄<span style={{ color: 'var(--primary-blue)' }}>수학</span>
+                        </span>
+                    </a>
+
+                    {/* Desktop Navigation */}
+                    <nav className="desktop-only" style={{ display: 'flex', alignItems: 'center', gap: '30px' }}>
+                        {navLinks.map((link) => (
+                            <a key={link.name} href={link.href} className="nav-link" style={{ fontSize: '16px', fontWeight: '500' }}>{link.name}</a>
+                        ))}
+                        <button className="blue-gradient btn-interaction" style={{
+                            padding: '10px 20px',
+                            borderRadius: '50px',
+                            color: 'white',
+                            fontWeight: '600',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '8px',
+                            boxShadow: 'var(--shadow-md)',
+                            fontSize: '15px'
+                        }}>
+                            <Phone size={16} />
+                            <span>상담 신청</span>
+                        </button>
+                    </nav>
+
+                    {/* Mobile Menu Toggle */}
+                    <button className="mobile-only-bar" style={{ display: 'none', color: 'var(--text-main)' }} onClick={() => setIsMobileMenuOpen(true)}>
+                        <Menu size={28} />
                     </button>
-                </nav>
-            </div>
-        </header>
+                </div>
+            </header>
+
+            {/* Mobile Menu Overlay */}
+            <AnimatePresence>
+                {isMobileMenuOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, x: '100%' }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: '100%' }}
+                        transition={{ type: 'tween', duration: 0.3 }}
+                        style={{
+                            position: 'fixed',
+                            top: 0,
+                            right: 0,
+                            bottom: 0,
+                            width: '80%',
+                            maxWidth: '300px',
+                            backgroundColor: 'white',
+                            zIndex: 2000,
+                            boxShadow: '-10px 0 30px rgba(0,0,0,0.1)',
+                            padding: '30px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '30px'
+                        }}
+                    >
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                            <span style={{ fontSize: '20px', fontWeight: '800', color: 'var(--text-main)' }}>MENU</span>
+                            <button onClick={() => setIsMobileMenuOpen(false)} style={{ color: 'var(--text-sub)' }}>
+                                <X size={28} />
+                            </button>
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                            {navLinks.map((link) => (
+                                <a
+                                    key={link.name}
+                                    href={link.href}
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    style={{
+                                        fontSize: '18px',
+                                        fontWeight: '600',
+                                        color: 'var(--text-main)',
+                                        textDecoration: 'none',
+                                        borderBottom: '1px solid #f1f5f9',
+                                        paddingBottom: '12px'
+                                    }}
+                                >
+                                    {link.name}
+                                </a>
+                            ))}
+                        </div>
+                        <div style={{ marginTop: 'auto' }}>
+                            <a href="tel:01073766040" className="blue-gradient" style={{
+                                width: '100%',
+                                padding: '16px',
+                                borderRadius: '12px',
+                                color: 'white',
+                                fontWeight: '700',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                gap: '8px',
+                                textDecoration: 'none',
+                                boxShadow: 'var(--shadow-md)'
+                            }}>
+                                <Phone size={20} />
+                                전화 상담 연결
+                            </a>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+            {/* Backdrop */}
+            {isMobileMenuOpen && (
+                <div
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.4)', zIndex: 1500 }}
+                />
+            )}
+        </>
     );
 };
 

@@ -14,18 +14,19 @@ const FAQItem = ({ question, answer }) => {
                     padding: '24px 0',
                     display: 'flex',
                     justifyContent: 'space-between',
-                    alignItems: 'center',
+                    alignItems: 'flex-start', // Align top for multi-line
                     textAlign: 'left',
                     background: 'none',
                     border: 'none',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    gap: '10px'
                 }}
             >
-                <span style={{ fontSize: '18px', fontWeight: '700', color: isOpen ? 'var(--primary-blue)' : 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <HelpCircle size={20} color={isOpen ? 'var(--primary-blue)' : '#94A3B8'} />
-                    {question}
+                <span style={{ fontSize: '18px', fontWeight: '700', color: isOpen ? 'var(--primary-blue)' : 'var(--text-main)', display: 'flex', alignItems: 'flex-start', gap: '12px', lineHeight: '1.4' }}>
+                    <HelpCircle size={24} color={isOpen ? 'var(--primary-blue)' : '#94A3B8'} style={{ minWidth: '24px', marginTop: '2px' }} />
+                    <span style={{ wordBreak: 'keep-all' }}>{question}</span>
                 </span>
-                {isOpen ? <ChevronUp size={20} color="var(--primary-blue)" /> : <ChevronDown size={20} color="#94A3B8" />}
+                {isOpen ? <ChevronUp size={24} color="var(--primary-blue)" style={{ minWidth: '24px' }} /> : <ChevronDown size={24} color="#94A3B8" style={{ minWidth: '24px' }} />}
             </button>
             <AnimatePresence>
                 {isOpen && (
@@ -56,7 +57,7 @@ const ParentFAQ = () => {
     ];
 
     return (
-        <section style={{ padding: '100px 0', backgroundColor: 'white' }}>
+        <section className="section-padding" style={{ backgroundColor: 'white' }}>
             <div className="container" style={{ maxWidth: '800px' }}>
                 <div className="section-header">
                     <h2 className="section-title">자주 묻는 질문</h2>

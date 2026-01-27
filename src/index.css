@@ -204,6 +204,14 @@ button {
     display: flex !important;
   }
 
+  /* Show hamburger on mobile inside header */
+  header button.mobile-only-bar {
+    display: block !important;
+    background: none;
+    border: none;
+    padding: 0;
+  }
+
   main {
     padding-bottom: 70px;
   }
@@ -373,6 +381,519 @@ button {
   text-shadow: 0 0 15px rgba(37, 99, 235, 0.2);
 }
 
-section {
-  overflow: hidden;
+/* Responsive Utility Classes for Mobile Optimization */
+
+/* Text & Typography */
+.hero-title {
+  font-size: 56px;
+  line-height: 1.3;
+  letter-spacing: -0.04em;
+  word-break: keep-all;
+  /* Prevent awkward Korean breaks */
+}
+
+.hero-desc {
+  font-size: 22px;
+  line-height: 1.8;
+  word-break: keep-all;
+}
+
+.section-padding {
+  padding: 100px 0;
+}
+
+/* Grids */
+.responsive-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.responsive-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+/* Mobile Overrides (Strict Isolation) */
+@media (max-width: 768px) {
+
+  /* 1. Reset & Safety */
+  body {
+    overflow-x: hidden;
+    /* Prevent horizontal scroll */
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .container {
+    padding-left: 20px !important;
+    /* Tighter padding for wider content */
+    padding-right: 20px !important;
+  }
+
+  /* 2. Navigation & Components */
+  header nav {
+    display: none !important;
+  }
+
+  header button.mobile-only-bar {
+    display: block !important;
+    background: none;
+    border: none;
+    padding: 0;
+  }
+
+  .desktop-only {
+    display: none !important;
+  }
+
+  .mobile-only {
+    display: block !important;
+  }
+
+  .mobile-only-bar {
+    display: flex !important;
+    padding-bottom: env(safe-area-inset-bottom, 20px) !important;
+  }
+
+  /* 3. Typography & Compactness */
+  .hero-title {
+    font-size: clamp(28px, 7vw, 36px) !important;
+    /* Slightly smaller for density */
+    line-height: 1.25 !important;
+    margin-bottom: 20px !important;
+    word-break: keep-all;
+  }
+
+  .hero-desc {
+    font-size: 15px !important;
+    line-height: 1.6 !important;
+    margin-bottom: 30px !important;
+    padding: 0 5px;
+  }
+
+  /* Force single line for critical CTA */
+  .btn-interaction {
+    white-space: nowrap !important;
+    padding: 18px 40px !important;
+    /* Adjust padding to fit if needed */
+    font-size: 16px !important;
+    width: auto !important;
+    min-width: fit-content;
+  }
+
+  /* Ensure parent of button doesn't constrain it awkwardly */
+  .hero-cta-container {
+    flex-direction: column;
+  }
+
+  .section-title {
+    font-size: 24px !important;
+    margin-bottom: 12px !important;
+  }
+
+  .section-subtitle {
+    font-size: 15px !important;
+    padding: 0 10px;
+    line-height: 1.5;
+  }
+
+  .section-padding {
+    padding: 40px 0 !important;
+    /* Reduced vertical spacing */
+  }
+
+  /* 4. Dense Layout Stacking */
+  .responsive-grid-4,
+  .responsive-grid-3,
+  .contact-info-row {
+    grid-template-columns: 1fr !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+    /* Reduced gap for compactness */
+  }
+
+  /* 5. Component Tweaks */
+  .premium-card {
+    padding: 20px !important;
+    /* Tighter card padding */
+  }
+
+  /* Contact Card Specifics */
+  .contact-grid {
+    flex-direction: column !important;
+    padding: 24px 20px !important;
+    gap: 24px !important;
+  }
+
+  .contact-grid>div {
+    width: 100%;
+    margin-bottom: 0 !important;
+  }
+
+  /* Map Card Mobile Ratio */
+  .map-card-hover {
+    height: 220px !important;
+    /* Compact height */
+  }
+
+  /* Happy Memories Section tweaks */
+  div[style*="gap: 8px"]>.badge-pill {
+    font-size: 11px !important;
+    padding: 4px 8px !important;
+  }
+
+  /* 6. Performance & UX */
+  .premium-card:hover,
+  .btn-interaction:hover,
+  .map-card-hover:hover {
+    transform: none !important;
+    box-shadow: var(--shadow-sm) !important;
+  }
+
+  .btn-interaction:active {
+    transform: scale(0.95) !important;
+  }
+}
+
+/* Director Intro Specifics */
+.director-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.director-image-card {
+  width: 100%;
+  height: 500px;
+  background-color: #F1F5F9;
+  border-radius: 24px;
+  background-image: url(/images/director.jpg);
+  background-size: cover;
+  background-position: center;
+  box-shadow: var(--shadow-float);
+  position: relative;
+}
+
+.director-name-badge {
+  position: absolute;
+  bottom: -30px;
+  right: -30px;
+  background-color: var(--primary-blue);
+  color: white;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: var(--shadow-card);
+  min-width: 180px;
+  text-align: center;
+}
+
+.director-text-content {
+  /* Desktop Default */
+}
+
+@media (max-width: 768px) {
+
+  /* Director Section: Zero-Gap Engineering */
+  .director-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+    /* Visual connection enabled */
+    display: flex !important;
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+
+  /* One-View Compact Image */
+  .director-image-card {
+    height: 250px !important;
+    /* Mobile Optimized Height */
+    border-bottom-left-radius: 4px !important;
+    /* Subtly connect with text */
+    border-bottom-right-radius: 4px !important;
+    margin-bottom: 0 !important;
+  }
+
+  .director-name-badge {
+    bottom: -15px !important;
+    right: 10px !important;
+    left: auto !important;
+    padding: 12px 24px !important;
+    /* Compact Badge */
+    font-size: 14px !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15) !important;
+  }
+
+  .director-name-badge>div:first-child {
+    font-size: 12px !important;
+    opacity: 0.9;
+  }
+
+  .director-name-badge>div:last-child {
+    font-size: 20px !important;
+  }
+
+  /* Text Flow Control */
+  .director-text-content {
+    padding: 0 4px !important;
+    /* Minimal buffer */
+    width: 100%;
+  }
+
+  /* Expert Mobile Refinement (FAQ & Reviews) */
+  /* 1. Review Section Density */
+  .reviews-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+    /* Tight vertical stack */
+  }
+
+  .reviews-grid .premium-card {
+    padding: 24px 20px !important;
+    /* Compact padding */
+  }
+
+  .reviews-grid h3 {
+    font-size: 18px !important;
+    /* Balanced Title */
+  }
+
+  .reviews-grid p {
+    font-size: 15px !important;
+    line-height: 1.6 !important;
+    letter-spacing: -0.01em;
+    margin-bottom: 20px !important;
+    word-break: keep-all;
+  }
+
+  /* 2. FAQ Section Touch Targets */
+  .section-title {
+    font-size: 26px !important;
+    line-height: 1.3 !important;
+  }
+
+  /* FAQ Item Compactness */
+  button[style*="padding: 24px 0"] {
+    padding: 18px 0 !important;
+    /* Reduced touch visual */
+  }
+
+  button span[style*="fontSize: 18px"] {
+    font-size: 16px !important;
+    /* Readable but compact */
+    letter-spacing: -0.02em;
+  }
+
+  /* Answer Text */
+  div[style*="padding: 0 0 30px 32px"] {
+    padding: 0 0 20px 0 !important;
+    /* Full width flow */
+    padding-left: 32px !important;
+    /* Keep indent for hierarchy */
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+  }
+
+  /* 3. Strict Zero-Gap Section Adjustments */
+
+  /* Management System: Minimal List UI (Senior Polish) */
+  #management .premium-card {
+    padding: 16px 0 !important;
+    /* Vertical breathing room only */
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-bottom: 1px solid #E2E8F0 !important;
+    /* Divider line */
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    gap: 16px !important;
+    margin-bottom: 0 !important;
+    border-radius: 0 !important;
+  }
+
+  #management .premium-card:last-child {
+    border-bottom: none !important;
+  }
+
+  #management .responsive-grid-4 {
+    gap: 0 !important;
+    /* Continuous list flow */
+  }
+
+  #management .premium-card>div:first-child {
+    min-width: 32px !important;
+    /* Compact Badge */
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 14px !important;
+    margin-top: 2px !important;
+    /* Optical alignment with title */
+  }
+
+  #management h3 {
+    font-size: 17px !important;
+    margin-bottom: 4px !important;
+    letter-spacing: -0.02em !important;
+    font-weight: 700 !important;
+  }
+
+  #management p {
+    font-size: 15px !important;
+    color: #64748B !important;
+    letter-spacing: -0.01em !important;
+  }
+
+  /* Curriculum: Single Column Textbooks & Flow */
+  .textbook-tag-list {
+    flex-direction: column !important;
+    gap: 8px !important;
+    margin-bottom: 24px !important;
+  }
+
+  .textbook-tag {
+    display: block !important;
+    width: 100% !important;
+    text-align: center;
+    padding: 10px !important;
+    /* Touch target optimized */
+    font-size: 14px !important;
+  }
+
+  /* FAQ: Zero Top Space & Immersion */
+  section.section-padding {
+    padding-top: 40px !important;
+    /* Global mobile section gap */
+    padding-bottom: 40px !important;
+  }
+
+  /* Force FAQ specific zeroing if needed */
+  #management,
+  #curriculum,
+  #contact {
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+  }
+
+  /* ParentFAQ specific: Ultra Compact Galaxy Mode */
+  section[style*="backgroundColor: white"] {
+    padding-top: 0 !important;
+  }
+
+  /* FAQ Item Density */
+  button[style*="padding: 24px 0"] {
+    padding: 16px 0 !important;
+    /* Minimized vertical padding */
+    align-items: center !important;
+    /* PREFER center for single line */
+  }
+
+  /* Flexible line breaking for long questions */
+  button span[style*="gap: 12px"] {
+    gap: 10px !important;
+  }
+
+  button span span {
+    display: inline-block;
+    /* Allow natural flow */
+    word-break: keep-all;
+    line-height: 1.35;
+    text-align: left;
+  }
+
+  /* Happy Memories: Visual Balance */
+  div[style*="padding: 40px"] {
+    padding: 30px 24px !important;
+    /* Reduced padding */
+    text-align: center !important;
+  }
+
+  div[style*="padding: 40px"] h3 {
+    font-size: 20px !important;
+    margin-bottom: 12px !important;
+    word-break: keep-all;
+  }
+
+  div[style*="padding: 40px"] p {
+    font-size: 15px !important;
+    line-height: 1.6 !important;
+    word-break: keep-all;
+    /* STRICT text balance */
+    letter-spacing: -0.01em !important;
+  }
+
+  /* Contact: Storytelling Flow */
+  .contact-grid {
+    padding: 0 !important;
+    /* Remove card constraint for flow */
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .contact-info-row {
+    flex-direction: column !important;
+    gap: 32px !important;
+    margin-bottom: 32px !important;
+  }
+
+  .interactive-area>div:first-child,
+  .contact-info-row>div>div:first-child {
+    font-size: 12px !important;
+    letter-spacing: 0.05em !important;
+    color: var(--primary-blue) !important;
+    /* Brand Emphasis */
+    margin-bottom: 4px !important;
+  }
+
+  .interactive-area>div:last-child,
+  .contact-info-row>div>div:last-child {
+    font-size: 20px !important;
+    letter-spacing: -0.02em !important;
+  }
+
+  .map-card-hover {
+    border-radius: 12px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+    border: 1px solid rgba(0, 0, 0, 0.05) !important;
+  }
+
+  /* Director Refinement */
+  .director-quote {
+    font-size: 22px !important;
+    line-height: 1.45 !important;
+    margin-bottom: 16px !important;
+    letter-spacing: -0.03em !important;
+    /* Tight headline */
+  }
+
+  .director-text-content {
+    padding: 0 !important;
+  }
+
+  .director-text-content div {
+    font-size: 15px !important;
+    /* Readable Body */
+    line-height: 1.65 !important;
+    gap: 12px !important;
+  }
+
+  .director-text-content p {
+    margin-bottom: 0 !important;
+  }
+}
+
+.map-card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.map-card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1) !important;
+}
+
+/* Utilities */
+.mobile-only {
+  display: none;
 }
