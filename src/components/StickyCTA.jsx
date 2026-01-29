@@ -24,7 +24,7 @@ const StickyCTA = () => {
                 flexDirection: 'column',
                 gap: '12px'
             }}
-            className="desktop-only" // Mobile has its own bar, keep this for tablet/desktop or override if needed
+            className="sticky-cta-container"
         >
             <motion.a
                 href="https://open.kakao.com/o/yourlink" // Replace with actual link

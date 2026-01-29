@@ -8,7 +8,7 @@ const Header = () => {
     const navLinks = [
         { name: '학원 소개', href: '#intro' },
         { name: '관리 시스템', href: '#management' },
-        { name: '성적 향상 후기', href: '#success' },
+        { name: '후기', href: '#success' },
         { name: '커리큘럼', href: '#curriculum' },
         { name: '입학 안내', href: '#contact' },
     ];
@@ -36,23 +36,8 @@ const Header = () => {
                     width: '100%',
                     padding: '0 20px'
                 }}>
-                    <a href="#" className="logo" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
-                        <div style={{
-                            width: '40px',
-                            height: '40px',
-                            background: 'linear-gradient(135deg, var(--primary-blue), var(--primary-dark))',
-                            borderRadius: '10px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            color: 'white',
-                            fontWeight: '900',
-                            fontSize: '24px',
-                            boxShadow: 'var(--shadow-sm)'
-                        }}>H</div>
-                        <span style={{ fontSize: '26px', fontWeight: '900', color: 'var(--text-main)', letterSpacing: '-0.02em', fontFamily: '"Pretendard", sans-serif' }}>
-                            해냄<span style={{ color: 'var(--primary-blue)' }}>수학</span>
-                        </span>
+                    <a href="#" className="logo" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
+                        <img src="/images/logo.png" alt="해냄수학 로고" style={{ height: '40px', width: 'auto' }} />
                     </a>
 
                     {/* Desktop Navigation */}

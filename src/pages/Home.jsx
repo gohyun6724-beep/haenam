@@ -1,12 +1,11 @@
-import React from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO'; // New SEO Component
 import { BookOpen, Calendar, Clock, MapPin, PhoneCall, Check, MessageSquare, Star, Award, TrendingUp, HelpCircle, Triangle, Box } from 'lucide-react';
 import CountUp from '../components/CountUp';
-import HallOfFame from '../components/HallOfFame';
 import StickyCTA from '../components/StickyCTA';
 import DirectorIntro from '../components/DirectorIntro';
 import SuccessReviews from '../components/SuccessReviews';
@@ -36,6 +35,21 @@ const Home = () => {
     const y1 = useTransform(scrollY, [0, 500], [0, 200]);
     const y2 = useTransform(scrollY, [0, 500], [0, -150]);
 
+    // Hero Slideshow Logic
+    const [currentBgIndex, setCurrentBgIndex] = useState(0);
+    const heroImages = [
+        '/images/hero_bg_students.png',
+        '/images/students.png',
+        '/images/evidence.png'
+    ];
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentBgIndex((prev) => (prev + 1) % heroImages.length);
+        }, 5000);
+        return () => clearInterval(interval);
+    }, []);
+
     return (
         <>
             <SEO />
@@ -61,91 +75,122 @@ const Home = () => {
                     }}
                 >
                     {/* Abstract 3D-like Background Elements (Silicon Valley Logic) */}
-                    <div className="desktop-only" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1, pointerEvents: 'none' }}>
-                        {/* Gradient Mesh */}
+                    <div className="desktop-only" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1 }}>
+                        {/* Premium 3D Background */}
                         <div style={{
                             position: 'absolute',
-                            top: '-20%', left: '-10%',
-                            width: '600px', height: '600px',
-                            background: 'radial-gradient(circle, rgba(29, 78, 216, 0.15) 0%, rgba(255,255,255,0) 70%)',
-                            filter: 'blur(60px)',
-                            borderRadius: '50%'
-                        }} />
-                        <div style={{
-                            position: 'absolute',
-                            bottom: '10%', right: '-5%',
-                            width: '500px', height: '500px',
-                            background: 'radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, rgba(255,255,255,0) 70%)',
-                            filter: 'blur(60px)',
-                            borderRadius: '50%'
-                        }} />
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            width: '120%',
+                            height: '120%',
+                            backgroundImage: 'url(/images/hero_3d.png)',
+                            backgroundSize: 'contain',
+                            backgroundPosition: 'center',
+                            backgroundRepeat: 'no-repeat',
+                            opacity: 0.8,
+                            filter: 'blur(30px) saturate(1.2)', /* Background Ambience */
+                        }}></div>
 
-                        {/* Floating Icons Parallax */}
-                        <motion.div style={{ position: 'absolute', top: '15%', left: '10%', color: 'var(--primary-blue)', opacity: 0.1, y: y1 }} variants={floating} animate="animate">
-                            <Triangle size={120} strokeWidth={1} />
-                        </motion.div>
-                        <motion.div style={{ position: 'absolute', top: '20%', right: '15%', color: 'var(--accent-gold)', opacity: 0.1, y: y2 }} variants={floating} animate="animate">
-                            <Box size={80} strokeWidth={1} />
-                        </motion.div>
-                        <motion.div style={{ position: 'absolute', bottom: '30%', left: '20%', color: 'var(--text-sub)', opacity: 0.05 }} animate={{ rotate: 360 }} transition={{ duration: 40, repeat: Infinity, ease: "linear" }}>
-                            <BookOpen size={160} strokeWidth={0.5} />
-                        </motion.div>
+                        {/* Sharp 3D Floating Element (Parallax feel) */}
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 1.5, ease: "easeOut" }}
+                            style={{
+                                position: 'absolute',
+                                top: '10%',
+                                right: '5%',
+                                width: '600px',
+                                height: '600px',
+                                backgroundImage: 'url(/images/hero_3d.png)',
+                                backgroundSize: 'contain',
+                                backgroundRepeat: 'no-repeat',
+                                zIndex: 0,
+                                filter: 'drop-shadow(0 20px 50px rgba(0,0,0,0.3))'
+                            }}
+                            animate={{
+                                y: [0, -20, 0],
+                            }}
+                            transition={{
+                                duration: 6,
+                                repeat: Infinity,
+                                ease: "easeInOut"
+                            }}
+                        />
                     </div>
 
                     <div className="container" style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', zIndex: 10 }}>
-                        <motion.div
-                            style={{ maxWidth: '800px', margin: '0 auto' }}
-                            initial="hidden"
-                            whileInView="visible"
-                            viewport={{ once: true }}
-                            variants={fadeInUp}
-                        >
-                            <div className="badge-pill badge-blue" style={{ marginBottom: '24px', display: 'inline-flex' }}>부산 명장동 수학 전문</div>
-                            <h1 className="hero-title" style={{ marginBottom: '30px', color: 'var(--text-main)', letterSpacing: '-0.02em' }}>
-                                수학의 완성은 수식이 아닌<br className="desktop-only" />
-                                <span style={{
-                                    color: 'var(--primary-blue)',
-                                    textDecoration: 'underline',
-                                    textDecorationThickness: '6px',
-                                    textUnderlineOffset: '12px',
-                                    textDecorationColor: 'rgba(26, 86, 219, 0.3)'
-                                }}> 문해력</span>에서 시작됩니다.
-                            </h1>
-                            <p className="hero-desc" style={{ color: 'var(--text-sub)', marginBottom: '50px', fontWeight: '500' }}>
-                                개념을 읽고 이해하는 힘이 문제 해결력의 본질입니다.<br className="desktop-only" />
-                                <strong>결국 스스로 해내는 힘 (HAENAM)</strong>을 기를 때까지,<br className="desktop-only" />
-                                엄마의 마음으로 끝까지 함께하겠습니다.
-                            </p>
-
+                        <div style={{ maxWidth: '900px', textAlign: 'center' }}>
                             <motion.div
-                                style={{ display: 'flex', gap: '20px', justifyContent: 'center', marginBottom: '60px' }}
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
+                                initial="hidden"
+                                animate="visible"
+                                variants={{
+                                    visible: {
+                                        transition: {
+                                            staggerChildren: 0.2, // Stagger timing
+                                            delayChildren: 0.1
+                                        }
+                                    }
+                                }}
                             >
-                                <a href="#contact" className="btn-interaction" style={{
-                                    backgroundColor: 'var(--primary-blue)',
-                                    color: 'white',
-                                    padding: '22px 56px',
-                                    borderRadius: '50px',
-                                    fontWeight: '700',
-                                    fontSize: '20px',
-                                    boxShadow: '0 20px 40px -10px rgba(26, 86, 219, 0.5)',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '12px',
-                                    border: '1px solid rgba(255,255,255,0.2)'
-                                }}>
-                                    <MessageSquare size={24} fill="currentColor" />
-                                    카카오톡 상담 문의
-                                </a>
-                            </motion.div>
-                        </motion.div>
-                    </div>
+                                <motion.div variants={fadeInUp}>
+                                    <span className="badge-pill badge-gold" style={{ marginBottom: '24px', display: 'inline-block', fontSize: '16px', padding: '10px 24px' }}>
+                                        부산 동래구 명장동 / 안락동
+                                    </span>
+                                </motion.div>
 
-                    {/* Hall Of Fame - Docked at Bottom of Hero */}
-                    <div style={{ width: '100%', marginTop: 'auto', borderTop: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(10px)', background: 'rgba(255,255,255,0.5)' }}>
-                        <HallOfFame />
+                                <motion.h1 variants={fadeInUp} className="hero-title" style={{
+                                    fontSize: 'clamp(24px, 5vw, 42px)', // Reduced size
+                                    fontWeight: '600',
+                                    marginBottom: '20px',
+                                    lineHeight: '1.3',
+                                    letterSpacing: '-0.02em',
+                                    color: 'var(--text-sub)', // Slightly softer color
+                                    textShadow: 'none'
+                                }}>
+                                    더 이상 수학 때문에<br />
+                                    <span style={{ position: 'relative', display: 'inline-block' }}>
+                                        꿈을 포기하지 않도록.
+                                    </span>
+                                </motion.h1>
+
+                                <motion.p variants={fadeInUp} className="hero-desc" style={{
+                                    fontSize: 'clamp(36px, 7vw, 64px)', // Increased size (Main Impact)
+                                    fontWeight: '900',
+                                    marginBottom: '50px',
+                                    color: 'var(--text-main)',
+                                    lineHeight: '1.2',
+                                    wordBreak: 'keep-all',
+                                    letterSpacing: '-0.03em',
+                                    textShadow: '0 0 40px rgba(255,255,255,0.8)'
+                                }}>
+                                    결과를 바꾸는<br className="mobile-only" /> <span style={{ color: 'var(--primary-blue)' }}>디테일의 차이</span>, 해냄수학.
+                                </motion.p>
+
+                                <motion.div variants={fadeInUp} style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                                    <a href="#contact" className="btn-interaction" style={{
+                                        backgroundColor: 'var(--primary-blue)',
+                                        color: 'white',
+                                        padding: '22px 56px',
+                                        borderRadius: '50px',
+                                        fontWeight: '700',
+                                        fontSize: '20px',
+                                        boxShadow: '0 20px 40px -10px rgba(26, 86, 219, 0.5)',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '12px',
+                                        border: '1px solid rgba(255,255,255,0.2)'
+                                    }}>
+                                        <MessageSquare size={24} fill="currentColor" />
+                                        무료 레벨테스트 신청
+                                    </a>
+                                </motion.div>
+                            </motion.div>
+                        </div>
                     </div>
+                    {/* Hall Of Fame - Docked at Bottom of Hero */}
+                    {/* Hall Of Fame Removed */}
                 </section>
 
                 {/* [NEW] Director's Philosophy */}
@@ -270,22 +315,24 @@ const Home = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: 0.2, duration: 0.5 }}
+                                whileHover={{ y: -8 }} /* Added Hover Effect */
                             >
                                 <Link to="/curriculum/standard" className="premium-card" style={{
                                     borderColor: 'var(--primary-blue)',
-                                    transform: 'scale(1.02)',
+                                    transform: 'scale(1.02)', /* Base scale */
                                     boxShadow: 'var(--shadow-card)',
                                     display: 'block',
                                     cursor: 'pointer',
                                     textDecoration: 'none',
                                     color: 'inherit',
-                                    height: '100%'
+                                    height: '100%',
+                                    transition: 'all 0.3s ease' /* Smooth transition */
                                 }}>
                                     <div style={{ background: 'var(--primary-blue)', color: 'white', textAlign: 'center', padding: '8px', fontSize: '13px', fontWeight: '700' }}>MOST POPULAR</div>
                                     <div style={{ padding: '30px', borderBottom: '1px solid var(--border-color)' }}>
                                         <div className="badge-pill badge-blue" style={{ marginBottom: '12px' }}>중상위권 도약</div>
                                         <h3 style={{ fontSize: '24px', marginBottom: '8px', color: 'var(--primary-blue)' }}>내신 만점반</h3>
-                                        <p style={{ fontSize: '15px', color: '#64748B' }}>다양한 유형을 익히고 실수를 줄이는 훈련을 합니다.</p>
+                                        <p style={{ fontSize: '15px', color: '#64748B' }}>유형별 문제 해결력을 기르고 고난도 문제에 도전합니다.</p>
                                     </div>
                                     <div style={{ padding: '30px' }}>
                                         <div style={{ fontSize: '13px', fontWeight: '700', color: '#94A3B8', marginBottom: '12px', textTransform: 'uppercase' }}>Main Textbooks</div>
@@ -295,9 +342,9 @@ const Home = () => {
                                             <span className="textbook-tag tag-school">학교별 기출</span>
                                         </div>
                                         <ul style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '15px', color: 'var(--text-main)', fontWeight: '500' }}>
-                                            <li style={{ display: 'flex', gap: '10px' }}><Check size={18} color="var(--primary-blue)" /> <span>내신 빈출 유형 완벽 분석</span></li>
-                                            <li style={{ display: 'flex', gap: '10px' }}><Check size={18} color="var(--primary-blue)" /> <span>서술형 감점 방지 훈련</span></li>
-                                            <li style={{ display: 'flex', gap: '10px' }}><Check size={18} color="var(--primary-blue)" /> <span>시험 4주 전 집중 대비</span></li>
+                                            <li style={{ display: 'flex', gap: '10px' }}><Check size={18} color="var(--primary-blue)" /> <span>필수 유형 완전 정복</span></li>
+                                            <li style={{ display: 'flex', gap: '10px' }}><Check size={18} color="var(--primary-blue)" /> <span>서술형 답안 작성 훈련</span></li>
+                                            <li style={{ display: 'flex', gap: '10px' }}><Check size={18} color="var(--primary-blue)" /> <span>오답 노트 & 유사 문제 체화</span></li>
                                         </ul>
                                     </div>
                                 </Link>
@@ -309,12 +356,13 @@ const Home = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: 0.3, duration: 0.5 }}
+                                whileHover={{ y: -5 }}
                             >
                                 <Link to="/curriculum/advanced" className="premium-card" style={{ display: 'block', cursor: 'pointer', textDecoration: 'none', color: 'inherit', height: '100%' }}>
                                     <div style={{ padding: '30px', borderBottom: '1px solid var(--border-color)', background: '#F8FAFC' }}>
-                                        <div className="badge-pill badge-red" style={{ marginBottom: '12px' }}>최상위권 목표</div>
-                                        <h3 style={{ fontSize: '24px', marginBottom: '8px' }}>심화 선행반</h3>
-                                        <p style={{ fontSize: '15px', color: '#64748B' }}>고난도 킬러 문제를 정복하고 고등 과정을 준비합니다.</p>
+                                        <div className="badge-pill badge-black" style={{ marginBottom: '12px' }}>최상위권 목표</div>
+                                        <h3 style={{ fontSize: '24px', marginBottom: '8px' }}>심화 1등급반</h3>
+                                        <p style={{ fontSize: '15px', color: '#64748B' }}>킬러 문항을 정복하고 흔들리지 않는 1등급을 만듭니다.</p>
                                     </div>
                                     <div style={{ padding: '30px' }}>
                                         <div style={{ fontSize: '13px', fontWeight: '700', color: '#94A3B8', marginBottom: '12px', textTransform: 'uppercase' }}>Main Textbooks</div>
@@ -324,9 +372,9 @@ const Home = () => {
                                             <span className="textbook-tag tag-black">고쟁이</span>
                                         </div>
                                         <ul style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '15px', color: 'var(--text-sub)' }}>
-                                            <li style={{ display: 'flex', gap: '10px' }}><Check size={18} color="var(--primary-blue)" /> <span>특목고/자사고 대비</span></li>
-                                            <li style={{ display: 'flex', gap: '10px' }}><Check size={18} color="var(--primary-blue)" /> <span>고등 공통수학 선행</span></li>
-                                            <li style={{ display: 'flex', gap: '10px' }}><Check size={18} color="var(--primary-blue)" /> <span>모의고사 1등급 목표</span></li>
+                                            <li style={{ display: 'flex', gap: '10px' }}><Check size={18} color="var(--primary-blue)" /> <span>심화 개념 & 킬러 문항 분석</span></li>
+                                            <li style={{ display: 'flex', gap: '10px' }}><Check size={18} color="var(--primary-blue)" /> <span>모의고사 기출 변형 풀이</span></li>
+                                            <li style={{ display: 'flex', gap: '10px' }}><Check size={18} color="var(--primary-blue)" /> <span>1:1 프리미엄 첨삭</span></li>
                                         </ul>
                                     </div>
                                 </Link>
@@ -388,96 +436,70 @@ const Home = () => {
                     style={{ padding: '80px 0', backgroundColor: 'var(--bg-section)' }}
                 >
                     <div className="container">
-                        <div className="premium-card contact-grid" style={{ padding: '40px', background: 'white' }}>
-                            <div style={{ marginBottom: '30px' }}>
-                                <h3 style={{ fontSize: '28px', marginBottom: '16px' }}>궁금한 점이 있으신가요?</h3>
-                                <p style={{ fontSize: '18px', color: 'var(--text-sub)', marginBottom: '30px', wordBreak: 'keep-all' }}>
+                        <div className="premium-card contact-grid" style={{ padding: '0', background: 'white', overflow: 'hidden', display: 'flex' }}>
+                            {/* Left: Info */}
+                            <div style={{ padding: '50px', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                                <h3 style={{ fontSize: '32px', marginBottom: '20px', fontWeight: '800' }}>궁금한 점이 있으신가요?</h3>
+                                <p style={{ fontSize: '18px', color: 'var(--text-sub)', marginBottom: '40px', wordBreak: 'keep-all', lineHeight: '1.6' }}>
                                     원장님이 직접 친절하게 상담해 드립니다.<br className="desktop-only" />
                                     부담 없이 연락 주셔서<br className="mobile-only" /> 우리 아이 성적 고민을 털어놓으세요.
                                 </p>
-                                <div className="contact-info-row" style={{ display: 'flex', gap: '40px', flexWrap: 'wrap' }}>
+                                <div className="contact-info-row" style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
                                     <div className="interactive-area">
-                                        <div style={{ fontSize: '14px', fontWeight: '700', color: '#94A3B8', marginBottom: '8px' }}>CONSULTATION</div>
-                                        <div style={{ fontSize: '24px', fontWeight: '800', color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                            <PhoneCall size={24} color="var(--primary-blue)" /> 010.7376.6040
+                                        <div style={{ fontSize: '14px', fontWeight: '700', color: 'var(--primary-blue)', marginBottom: '4px', letterSpacing: '0.05em' }}>CONSULTATION</div>
+                                        <div style={{ fontSize: '26px', fontWeight: '800', color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '12px', letterSpacing: '-0.02em' }}>
+                                            <PhoneCall size={28} color="var(--primary-blue)" /> 010.7376.6040
                                         </div>
                                     </div>
                                     <div>
-                                        <div style={{ fontSize: '14px', fontWeight: '700', color: '#94A3B8', marginBottom: '8px' }}>LOCATION</div>
-                                        <div style={{ fontSize: '20px', fontWeight: '700', color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                            <MapPin size={24} color="var(--primary-blue)" /> 부산 명장로127번길 10
+                                        <div style={{ fontSize: '14px', fontWeight: '700', color: 'var(--primary-blue)', marginBottom: '4px', letterSpacing: '0.05em' }}>LOCATION</div>
+                                        <div style={{ fontSize: '22px', fontWeight: '800', color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '12px', letterSpacing: '-0.02em' }}>
+                                            <MapPin size={28} color="var(--primary-blue)" /> 부산 명장로127번길 10
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            {/* Naver Map Link Card */}
-                            <a
-                                href="https://map.naver.com/p/search/부산%20명장로127번길%2010"
-                                target="_blank"
-                                rel="noopener noreferrer"
+                            {/* Right: Map Image (Static) */}
+                            <div
                                 style={{
-                                    width: '100%',
-                                    maxWidth: '500px',
-                                    height: '320px',
+                                    flex: '1',
+                                    minHeight: '400px',
                                     background: '#F8FAFC',
-                                    borderRadius: '16px',
-                                    overflow: 'hidden',
-                                    boxShadow: 'var(--shadow-card)',
-                                    border: '1px solid #E2E8F0',
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    textDecoration: 'none',
                                     position: 'relative',
-                                    cursor: 'pointer'
+                                    overflow: 'hidden'
                                 }}
-                                className="map-card-hover"
                             >
-                                {/* Background Map Image */}
+                                <img
+                                    src="/images/map_preview.png"
+                                    alt="학원 위치 지도"
+                                    style={{
+                                        width: '100%',
+                                        height: '100%',
+                                        objectFit: 'cover'
+                                    }}
+                                />
+                                {/* Location Label Overlay */}
                                 <div style={{
                                     position: 'absolute',
-                                    top: 0, left: 0, right: 0, bottom: 0,
-                                    backgroundImage: 'url(/images/map_preview.png)',
-                                    backgroundSize: 'cover',
-                                    backgroundPosition: 'center',
-                                    opacity: 0.9,
-                                    transition: 'transform 0.5s ease'
-                                }}
-                                    className="map-bg"
-                                ></div>
-                                {/* Overlay for text readability */}
-                                <div style={{
-                                    position: 'absolute',
-                                    top: 0, left: 0, right: 0, bottom: 0,
-                                    background: 'linear-gradient(to bottom, rgba(255,255,255,0) 50%, rgba(255,255,255,0.8) 100%)'
-                                }}></div>
-
-                                <div className="badge-pill" style={{
-                                    backgroundColor: '#03C75A',
-                                    color: 'white',
-                                    marginBottom: '20px',
-                                    fontSize: '16px',
+                                    bottom: '20px',
+                                    left: '50%',
+                                    transform: 'translateX(-50%)',
+                                    background: 'white',
                                     padding: '10px 20px',
-                                    boxShadow: '0 4px 12px rgba(3, 199, 90, 0.3)',
+                                    borderRadius: '30px',
+                                    boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
+                                    fontWeight: '700',
                                     display: 'flex',
                                     alignItems: 'center',
                                     gap: '8px',
-                                    zIndex: 1
+                                    fontSize: '14px',
+                                    color: 'var(--text-main)'
                                 }}>
-                                    <MapPin size={18} /> 네이버 지도에서 보기
+                                    <MapPin size={16} fill="var(--primary-blue)" color="var(--primary-blue)" />
+                                    부산 동래구 명장로127번길 10, 4층
                                 </div>
-
-                                <p style={{
-                                    color: 'var(--text-sub)',
-                                    fontSize: '15px',
-                                    fontWeight: '500',
-                                    zIndex: 1
-                                }}>
-                                    클릭하시면 정확한 길찾기가 가능합니다
-                                </p>
-                            </a>
+                            </div>
                         </div>
                     </div>
                 </motion.section>

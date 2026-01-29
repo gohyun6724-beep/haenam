@@ -25,8 +25,8 @@ const SEO = ({ title, description, keywords, url }) => {
     return (
         <Helmet>
             <title>{title ? `${title} | 해냄수학` : "해냄수학 - 부산 명장동 수학 문해력 전문"}</title>
-            <meta name="description" content={description || "내 아이를 위한 확실한 선택. 부산 명장동 해냄수학은 독한 관리와 1:1 맞춤 수업으로 성적으로 증명합니다."} />
-            <meta name="keywords" content={keywords || "부산수학학원, 명장동수학학원, 안락동수학학원, 동래구수학, 수학문해력, 1:1과외식"} />
+            <meta name="description" content={description || "내 아이를 위한 확실한 선택. 부산 동래구 명장동, 안락동 수학학원 해냄수학. 독한 관리와 1:1 맞춤 수업으로 성적으로 증명합니다."} />
+            <meta name="keywords" content={keywords || "부산수학학원, 동래구수학학원, 명장동수학학원, 안락동수학학원, 충렬고내신, 안락중내신, 혜화여고수학, 수학문해력, 1:1과외식"} />
 
             {/* FaceBook / Open Graph */}
             <meta property="og:type" content="website" />
